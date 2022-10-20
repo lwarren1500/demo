@@ -15,12 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Homepage
 Route::get('/', function () {
     return view('posts', [
-        'posts' => Post::all()
+        'posts' => Post::with('category')->get()
     ]);
 });
 
+// Single post
 Route::get('posts/{post:slug}', function (Post $post) {
 
     return view('post', [
@@ -28,6 +30,7 @@ Route::get('posts/{post:slug}', function (Post $post) {
     ]);
 });
 
+// Posts by category
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [
         'posts' => $category->posts
